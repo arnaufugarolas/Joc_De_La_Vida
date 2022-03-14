@@ -15,6 +15,17 @@ public class game {
         return new boolean[Dimensions[0]][Dimensions[1]];
     }
 
+    public boolean[][] BoardDrawnAuto(boolean[][] Board) {
+        int[] Dimensions = {Board.length, Board[0].length};
+        for (int i = 0; i != 5;){
+            int[] RandomCords = {random.nextInt(Dimensions[0]), random.nextInt(Dimensions[1])};
+            if (!Board[RandomCords[0]][RandomCords[1]]) {
+                Board[RandomCords[0]][RandomCords[1]] = true;
+                i ++;
+            }
+        }
+        return Board;
+    }
     public void BoardPrint(boolean[][] Board) {
         char live = 9209;
         char dead = 11036;
@@ -28,7 +39,7 @@ public class game {
     }
 
     public static void main(String[] args) {
-        boolean[][] Board = Main.BoardInit();
+        boolean[][] Board = Main.BoardDrawnAuto(Main.BoardInit());
         Main.BoardPrint(Board);
     }
 }
