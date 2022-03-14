@@ -1,7 +1,9 @@
+import java.util.Random;
 import java.util.Scanner;
 
 public class game {
     static Scanner input = new Scanner(System.in);
+    static Random random = new Random();
     static game Main = new game();
 
     public boolean[][] BoardInit() {
