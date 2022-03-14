@@ -1,4 +1,4 @@
-# Joc_De_La_Vida
+# Joc De La Vida
 ## Pràctica de programació UF2: Disseny Modular.  
 Cal implementar el famós joc de la vida de Conway.   
 Tot i que hi ha força variants del joc, ens centrarem en la que va publicar originalment en Conway al 1970.  
@@ -13,7 +13,7 @@ Les regles de l’evolució són les següents:
 * Cada cèl·lula amb 1 o cap veïna mor per soledat.  
 * Cada cèl·lula morta amb 3 cèl·lules veïnes vives, reneix de nou.  
 ### Aquest tipus de regles s’expressen:  
-* AA/B  23/3  
+* AA/B >> 23/3  
 * AA: Representen les condicions de sobreviure.  
 * B: Representa les condicions de renaixença.  
 El sistema caldrà que el puguem configurar de forma que podrem variar les condicions de AA/B i veure com evoluciona el sistema un cop canviat les condicions de l’evolució.  
