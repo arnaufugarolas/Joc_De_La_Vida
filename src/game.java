@@ -15,17 +15,6 @@ public class game {
         return new boolean[Dimensions[0]][Dimensions[1]];
     }
 
-    public boolean[][] BoardDrawnAuto(boolean[][] Board) {
-        int[] Dimensions = {Board.length, Board[0].length};
-        for (int i = 0; i != 5;){
-            int[] RandomCords = {random.nextInt(Dimensions[0]), random.nextInt(Dimensions[1])};
-            if (!Board[RandomCords[0]][RandomCords[1]]) {
-                Board[RandomCords[0]][RandomCords[1]] = true;
-                i ++;
-            }
-        }
-        return Board;
-    }
     public void BoardPrint(boolean[][] Board) {
         char live = 9209;
         char dead = 11036;
@@ -37,6 +26,36 @@ public class game {
             System.out.println();
         }
     }
+
+    public boolean[][] BoardDrawnAuto(boolean[][] Board) {
+        int[] Dimensions = {Board.length, Board[0].length};
+        System.out.print("Introdueix el número de conjunts de celdes: \n");
+        //int cels = input.nextInt();
+        int cels = 3;
+        for (int i = 0; i != cels;){
+            int[] RandomCords = {random.nextInt(Dimensions[0]), random.nextInt(Dimensions[1])};
+            if (!Board[RandomCords[0]][RandomCords[1]]) {
+                Board[RandomCords[0]][RandomCords[1]] = true;
+                i ++;
+                for (int j = 0; j != 5;) {
+                    int[] RandomCel = {(random.nextInt(5) - 2), random.nextInt(5) - 2};
+                    if (!(RandomCel[0] == 0 && RandomCel[1] == 0)) {
+                        if (!(RandomCel[0] + RandomCords[0] <= -1 || RandomCel[1] + RandomCords[1] <= -1)) {
+                            if (!(RandomCel[0] + RandomCords[0] >= Dimensions[0] || RandomCel[1] + RandomCords[1] >= Dimensions[1])) {
+                                if (!Board[RandomCel[0] + RandomCords[0]][RandomCel[1] + RandomCords[1]]) {
+                                    Board[RandomCel[0] + RandomCords[0]][RandomCel[1] + RandomCords[1]] = true;
+                                    j++;
+                                }
+                            }
+                        }
+                    }
+                    System.out.println("Otra");
+                }
+            }
+        }
+        return Board;
+    }
+
 
     public static void main(String[] args) {
         boolean[][] Board = Main.BoardDrawnAuto(Main.BoardInit());
