@@ -29,6 +29,11 @@ public class game {
         }
     }
 
+    public int[][] CelGetFreeNeighbors(boolean[][] Board) {
+        int[][] FreeNeighbors = new int[0][2];
+        return FreeNeighbors;
+    }
+
     public boolean[][] BoardDrawnAuto(boolean[][] Board) {
         int[] Dimensions = {Board.length, Board[0].length};
         System.out.print("Introdueix el número de conjunts de celdes: \n");
