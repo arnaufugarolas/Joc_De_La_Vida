@@ -31,13 +31,16 @@ public class game {
 
     public int[][] CelGetFreeNeighbors(boolean[][] Board, int[] Cords) {
         int[][] FreeNeighbors = new int[0][2];
+        int[] Dimensions = {Board.length, Board[0].length};
         for (int y = -1; y != 2; y++) {
             for (int x = -1; x != 2; x++) {
-                if (!Board[Cords[0] + y][Cords[1] + x]) {
-                    int[][] tmp = FreeNeighbors;
-                    FreeNeighbors = new int[tmp.length + 1][2];
-                    System.arraycopy(tmp, 0, FreeNeighbors, 0, tmp.length);
-                    FreeNeighbors[tmp.length] = new int[] {Cords[0] + y, Cords[1] + x};
+                if (!(((Cords[0] + y) <= -1 || (Cords[0] + x) <= -1)) && !(((Cords[0] + y) >= Dimensions[0] || (Cords[0] + x) >= Dimensions[1]))) {
+                    if (!Board[Cords[0] + y][Cords[1] + x]) {
+                        int[][] tmp = FreeNeighbors;
+                        FreeNeighbors = new int[tmp.length + 1][2];
+                        System.arraycopy(tmp, 0, FreeNeighbors, 0, tmp.length);
+                        FreeNeighbors[tmp.length] = new int[] {Cords[0] + y, Cords[1] + x};
+                    }
                 }
             }
         }
@@ -74,7 +77,7 @@ public class game {
     }
 
     public static void main(String[] args) {
-        int[][] FreeCells = Main.CelGetFreeNeighbors(Main.BoardInit(), new int[] {4, 5});
+        int[][] FreeCells = Main.CelGetFreeNeighbors(Main.BoardInit(), new int[] {9, 9});
     }
 }
 
