@@ -10,8 +10,10 @@ public class game {
         int[] Dimensions = new int[2];
         System.out.print("Introdueix les dimensions del tauler:\nEix Y: ");
         Dimensions[0] = input.nextInt();
+        //Dimensions[0] = 10;
         System.out.print("Eix X: ");
         Dimensions[1] = input.nextInt();
+        //Dimensions[1] = 20;
         return new boolean[Dimensions[0]][Dimensions[1]];
     }
 
@@ -58,8 +60,9 @@ public class game {
 
 
     public static void main(String[] args) {
-        boolean[][] Board = Main.BoardDrawnAuto(Main.BoardInit());
-        Main.BoardPrint(Board);
+        for (int i = 0; i != 100; i++) {
+            Main.BoardPrint(Main.BoardDrawnAuto(Main.BoardInit()));
+        }
     }
 }
 
