@@ -29,6 +29,21 @@ public class game {
         }
     }
 
+    public int[][] CelGetFreeNeighbors(boolean[][] Board, int[] Cords) {
+        int[][] FreeNeighbors = new int[0][2];
+        for (int y = -1; y != 2; y++) {
+            for (int x = -1; x != 2; x++) {
+                if (!Board[Cords[0] + y][Cords[1] + x]) {
+                    int[][] tmp = FreeNeighbors;
+                    FreeNeighbors = new int[tmp.length + 1][2];
+                    System.arraycopy(tmp, 0, FreeNeighbors, 0, tmp.length);
+                    FreeNeighbors[tmp.length] = new int[] {Cords[0] + y, Cords[1] + x};
+                }
+            }
+        }
+        return FreeNeighbors;
+    }
+
     public boolean[][] BoardDrawnAuto(boolean[][] Board) {
         int[] Dimensions = {Board.length, Board[0].length};
         System.out.print("Introdueix el número de conjunts de celdes: \n");
@@ -58,11 +73,8 @@ public class game {
         return Board;
     }
 
-
     public static void main(String[] args) {
-        for (int i = 0; i != 100; i++) {
-            Main.BoardPrint(Main.BoardDrawnAuto(Main.BoardInit()));
-        }
+        int[][] FreeCells = Main.CelGetFreeNeighbors(Main.BoardInit(), new int[] {4, 5});
     }
 }
 
