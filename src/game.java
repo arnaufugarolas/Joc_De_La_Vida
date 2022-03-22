@@ -1,3 +1,4 @@
+import java.util.Arrays;
 import java.util.Random;
 import java.util.Scanner;
 
@@ -9,11 +10,11 @@ public class game {
     public boolean[][] BoardInit() {
         int[] Dimensions = new int[2];
         System.out.print("Introdueix les dimensions del tauler:\nEix Y: ");
-        Dimensions[0] = input.nextInt();
-        //Dimensions[0] = 10;
+        //Dimensions[0] = input.nextInt();
+        Dimensions[0] = 10;
         System.out.print("Eix X: ");
-        Dimensions[1] = input.nextInt();
-        //Dimensions[1] = 20;
+        //Dimensions[1] = input.nextInt();
+        Dimensions[1] = 10;
         return new boolean[Dimensions[0]][Dimensions[1]];
     }
 
@@ -34,12 +35,14 @@ public class game {
         int[] Dimensions = {Board.length, Board[0].length};
         for (int y = -1; y != 2; y++) {
             for (int x = -1; x != 2; x++) {
-                if (!(((Cords[0] + y) <= -1 || (Cords[0] + x) <= -1)) && !(((Cords[0] + y) >= Dimensions[0] || (Cords[0] + x) >= Dimensions[1]))) {
-                    if (!Board[Cords[0] + y][Cords[1] + x]) {
-                        int[][] tmp = FreeNeighbors;
-                        FreeNeighbors = new int[tmp.length + 1][2];
-                        System.arraycopy(tmp, 0, FreeNeighbors, 0, tmp.length);
-                        FreeNeighbors[tmp.length] = new int[] {Cords[0] + y, Cords[1] + x};
+                if ((Cords[0] + y >= 0) && (Cords[0] + y < Dimensions[0])) {
+                    if ((Cords[1] + x >= 0) && (Cords[1] + x < Dimensions[1])) {
+                        if (!Board[Cords[0] + y][Cords[1] + x]) {
+                            int[][] tmp = FreeNeighbors;
+                            FreeNeighbors = new int[tmp.length + 1][2];
+                            System.arraycopy(tmp, 0, FreeNeighbors, 0, tmp.length);
+                            FreeNeighbors[tmp.length] = new int[]{Cords[0] + y, Cords[1] + x};
+                        }
                     }
                 }
             }
@@ -51,25 +54,27 @@ public class game {
         int[] Dimensions = {Board.length, Board[0].length};
         System.out.print("Introdueix el número de conjunts de celdes: \n");
         //int cels = input.nextInt();
-        int cels = 3;
+        int cels = 2;
         for (int i = 0; i != cels;){
             int[] RandomCords = {random.nextInt(Dimensions[0]), random.nextInt(Dimensions[1])};
             if (!Board[RandomCords[0]][RandomCords[1]]) {
-                Board[RandomCords[0]][RandomCords[1]] = true;
                 i ++;
+                Board[RandomCords[0]][RandomCords[1]] = true;
+                int[][] FreeCells = Main.CelGetFreeNeighbors(Board, RandomCords);
                 for (int j = 0; j != 5;) {
-                    int[] RandomCel = {(random.nextInt(5) - 2), random.nextInt(5) - 2};
-                    if (!(RandomCel[0] == 0 && RandomCel[1] == 0)) {
-                        if (!(RandomCel[0] + RandomCords[0] <= -1 || RandomCel[1] + RandomCords[1] <= -1)) {
-                            if (!(RandomCel[0] + RandomCords[0] >= Dimensions[0] || RandomCel[1] + RandomCords[1] >= Dimensions[1])) {
-                                if (!Board[RandomCel[0] + RandomCords[0]][RandomCel[1] + RandomCords[1]]) {
-                                    Board[RandomCel[0] + RandomCords[0]][RandomCel[1] + RandomCords[1]] = true;
-                                    j++;
-                                }
-                            }
+                    FreeCells = Main.CelGetFreeNeighbors(Board, RandomCords);
+                    try {
+                        int[] RandomCel = FreeCells[random.nextInt(FreeCells.length)];
+                        if (!Board[RandomCel[0]][RandomCel[1]]) {
+                            Board[RandomCel[0]][RandomCel[1]] = true;
+                            j++;
                         }
+                        if (j == FreeCells.length) j = 5;
                     }
-                    System.out.println("Otra");
+                    catch (Exception a) {
+                        System.out.print(FreeCells.length);
+                    }
+
                 }
             }
         }
@@ -77,7 +82,8 @@ public class game {
     }
 
     public static void main(String[] args) {
-        int[][] FreeCells = Main.CelGetFreeNeighbors(Main.BoardInit(), new int[] {9, 9});
+
+        while(true) Main.BoardPrint(Main.BoardDrawnAuto(Main.BoardInit()));
     }
 }
 
