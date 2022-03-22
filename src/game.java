@@ -9,11 +9,9 @@ public class game {
     public boolean[][] BoardInit() {
         int[] Dimensions = new int[2];
         System.out.print("Introdueix les dimensions del tauler:\nEix Y: ");
-        //Dimensions[0] = input.nextInt();
-        Dimensions[0] = 10;
+        Dimensions[0] = input.nextInt();
         System.out.print("Eix X: ");
-        //Dimensions[1] = input.nextInt();
-        Dimensions[1] = 10;
+        Dimensions[1] = input.nextInt();
         return new boolean[Dimensions[0]][Dimensions[1]];
     }
 
@@ -51,9 +49,8 @@ public class game {
 
     public boolean[][] BoardDrawnAuto(boolean[][] Board) {
         int[] Dimensions = {Board.length, Board[0].length};
-        System.out.print("Introdueix el número de conjunts de celdas: \n");
-        //int cels = input.nextInt();
-        int cels = 2;
+        System.out.print("Introdueix el número de conjunts de celdas: ");
+        int cels = input.nextInt();
         for (int i = 0; i != cels;){
             int[] RandomCords = {random.nextInt(Dimensions[0]), random.nextInt(Dimensions[1])};
             if (!Board[RandomCords[0]][RandomCords[1]]) {
@@ -62,18 +59,14 @@ public class game {
                 int[][] FreeCells;
                 for (int j = 0; j != 5;) {
                     FreeCells = Main.CelGetFreeNeighbors(Board, RandomCords);
-                    try {
+                    if (FreeCells.length == 0) j = 5;
+                    else {
                         int[] RandomCel = FreeCells[random.nextInt(FreeCells.length)];
                         if (!Board[RandomCel[0]][RandomCel[1]]) {
                             Board[RandomCel[0]][RandomCel[1]] = true;
                             j++;
                         }
-                        if (j == FreeCells.length) j = 5;
                     }
-                    catch (Exception a) {
-                        System.out.print(FreeCells.length);
-                    }
-
                 }
             }
         }
@@ -81,8 +74,6 @@ public class game {
     }
 
     public static void main(String[] args) {
-
-        while(true) Main.BoardPrint(Main.BoardDrawnAuto(Main.BoardInit()));
     }
 }
 
