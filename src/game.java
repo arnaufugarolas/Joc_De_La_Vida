@@ -6,12 +6,15 @@ public class game {
     static Random random = new Random();
     static game Main = new game();
 
+    public int NextInt(String TxT) {
+        System.out.print(TxT);
+        return input.nextInt();
+    }
+
     public boolean[][] BoardInit() {
         int[] Dimensions = new int[2];
-        System.out.print("Introdueix les dimensions del tauler:\nEix Y: ");
-        Dimensions[0] = input.nextInt();
-        System.out.print("Eix X: ");
-        Dimensions[1] = input.nextInt();
+        Dimensions[0] = Main.NextInt("Introdueix les dimensions del tauler:\nEix Y: ");
+        Dimensions[1] = Main.NextInt("Eix X: ");
         return new boolean[Dimensions[0]][Dimensions[1]];
     }
 
@@ -49,8 +52,7 @@ public class game {
 
     public boolean[][] BoardDrawnAuto(boolean[][] Board) {
         int[] Dimensions = {Board.length, Board[0].length};
-        System.out.print("Introdueix el número de conjunts de celdas: ");
-        int cels = input.nextInt();
+        int cels = Main.NextInt("Introdueix el número de conjunts de celdas: ");
         for (int i = 0; i != cels;){
             int[] RandomCords = {random.nextInt(Dimensions[0]), random.nextInt(Dimensions[1])};
             if (!Board[RandomCords[0]][RandomCords[1]]) {
@@ -70,6 +72,13 @@ public class game {
                 }
             }
         }
+        return Board;
+    }
+
+    public boolean[][] BoardDrawnManual(boolean[][] Board) {
+
+
+
         return Board;
     }
 
