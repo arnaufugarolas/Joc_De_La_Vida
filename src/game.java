@@ -51,7 +51,7 @@ public class game {
 
     public boolean[][] BoardDrawnAuto(boolean[][] Board) {
         int[] Dimensions = {Board.length, Board[0].length};
-        System.out.print("Introdueix el número de conjunts de celdes: \n");
+        System.out.print("Introdueix el número de conjunts de celdas: \n");
         //int cels = input.nextInt();
         int cels = 2;
         for (int i = 0; i != cels;){
@@ -59,7 +59,7 @@ public class game {
             if (!Board[RandomCords[0]][RandomCords[1]]) {
                 i ++;
                 Board[RandomCords[0]][RandomCords[1]] = true;
-                int[][] FreeCells = Main.CelGetFreeNeighbors(Board, RandomCords);
+                int[][] FreeCells;
                 for (int j = 0; j != 5;) {
                     FreeCells = Main.CelGetFreeNeighbors(Board, RandomCords);
                     try {
