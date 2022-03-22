@@ -19,12 +19,12 @@ public class game {
     }
 
     public void BoardPrint(boolean[][] Board) {
-        char live = 9209;
-        char dead = 11036;
+        char Live = 9209;
+        char Dead = 11036;
         for (boolean[] y : Board) {
             for (boolean x : y) {
-                if (x) System.out.printf("%c ", live);
-                else System.out.printf("%c ", dead);
+                if (x) System.out.printf("%c ", Live);
+                else System.out.printf("%c ", Dead);
             }
             System.out.println();
         }
@@ -52,20 +52,20 @@ public class game {
 
     public boolean[][] BoardDrawnAuto(boolean[][] Board) {
         int[] Dimensions = {Board.length, Board[0].length};
-        int cels = Main.NextInt("Introdueix el número de conjunts de celdas: ");
-        for (int i = 0; i != cels;){
-            int[] RandomCords = {random.nextInt(Dimensions[0]), random.nextInt(Dimensions[1])};
-            if (!Board[RandomCords[0]][RandomCords[1]]) {
+        int cells = Main.NextInt("Introdueix el número de conjunts de celdas: ");
+        for (int i = 0; i != cells;){
+            int[] ApexCell = {random.nextInt(Dimensions[0]), random.nextInt(Dimensions[1])};
+            if (!Board[ApexCell[0]][ApexCell[1]]) {
                 i ++;
-                Board[RandomCords[0]][RandomCords[1]] = true;
+                Board[ApexCell[0]][ApexCell[1]] = true;
                 int[][] FreeCells;
                 for (int j = 0; j != 5;) {
-                    FreeCells = Main.CelGetFreeNeighbors(Board, RandomCords);
+                    FreeCells = Main.CelGetFreeNeighbors(Board, ApexCell);
                     if (FreeCells.length == 0) j = 5;
                     else {
-                        int[] RandomCel = FreeCells[random.nextInt(FreeCells.length)];
-                        if (!Board[RandomCel[0]][RandomCel[1]]) {
-                            Board[RandomCel[0]][RandomCel[1]] = true;
+                        int[] RandomCell = FreeCells[random.nextInt(FreeCells.length)];
+                        if (!Board[RandomCell[0]][RandomCell[1]]) {
+                            Board[RandomCell[0]][RandomCell[1]] = true;
                             j++;
                         }
                     }
