@@ -52,7 +52,14 @@ public class game {
 
     public boolean[][] BoardDrawnAuto(boolean[][] Board) {
         int[] Dimensions = {Board.length, Board[0].length};
-        int cells = Main.NextInt("Introdueix el número de conjunts de celdas: ");
+        boolean stop = false;
+        int cells = 0;
+        while (!stop) {
+            cells = Main.NextInt("Introdueix el número de conjunts de celdas: ");
+            if (cells * 6 < Dimensions[0] * Dimensions[1]) stop = true;
+            else System.out.println("Número de conjunts massa gran");
+        }
+
         for (int i = 0; i != cells;){
             int[] ApexCell = {random.nextInt(Dimensions[0]), random.nextInt(Dimensions[1])};
             if (!Board[ApexCell[0]][ApexCell[1]]) {
@@ -76,13 +83,24 @@ public class game {
     }
 
     public boolean[][] BoardDrawnManual(boolean[][] Board) {
-
-
+        int cells = Main.NextInt("Introdueix el nombre de celdas que vols afegir: ");
+        for (int i = 0; i != cells;) {
+            int[] Cords = new int[2];
+            Cords[0] = Main.NextInt("Introdueix les coordenades d'una celda:\nEix Y: ");
+            Cords[1] = Main.NextInt("Eix X: ");
+            if (!Board[Cords[0]][Cords[1]]) {
+                Board[Cords[0]][Cords[1]] = true;
+                Main.BoardPrint(Board);
+                i++;
+            }
+            else System.out.println("La celda ja esta ocupada");
+        }
 
         return Board;
     }
 
     public static void main(String[] args) {
+        Main.BoardPrint(Main.BoardDrawnAuto(Main.BoardInit()));
     }
 }
 
