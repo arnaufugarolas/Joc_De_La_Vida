@@ -50,6 +50,26 @@ public class game {
         return FreeNeighbors;
     }
 
+    public int[][] CelGetAliveNeighbors(boolean[][] Board, int[] Cords) {
+        int[][] AliveNeighbors = new int[0][2];
+        int[] Dimensions = {Board.length, Board[0].length};
+        for (int y = -1; y != 2; y++) {
+            for (int x = -1; x != 2; x++) {
+                if ((Cords[0] + y >= 0) && (Cords[0] + y < Dimensions[0])) {
+                    if ((Cords[1] + x >= 0) && (Cords[1] + x < Dimensions[1])) {
+                        if (Board[Cords[0] + y][Cords[1] + x]) {
+                            int[][] tmp = AliveNeighbors;
+                            AliveNeighbors = new int[tmp.length + 1][2];
+                            System.arraycopy(tmp, 0, AliveNeighbors, 0, tmp.length);
+                            AliveNeighbors[tmp.length] = new int[]{Cords[0] + y, Cords[1] + x};
+                        }
+                    }
+                }
+            }
+        }
+        return AliveNeighbors;
+    }
+
     public boolean[][] BoardDrawnAuto(boolean[][] Board) {
         int[] Dimensions = {Board.length, Board[0].length};
         boolean stop = false;
