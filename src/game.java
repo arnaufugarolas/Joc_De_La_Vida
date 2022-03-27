@@ -37,11 +37,13 @@ public class game {
             for (int x = -1; x != 2; x++) {
                 if ((Cords[0] + y >= 0) && (Cords[0] + y < Dimensions[0])) {
                     if ((Cords[1] + x >= 0) && (Cords[1] + x < Dimensions[1])) {
-                        if (!Board[Cords[0] + y][Cords[1] + x]) {
-                            int[][] tmp = FreeNeighbors;
-                            FreeNeighbors = new int[tmp.length + 1][2];
-                            System.arraycopy(tmp, 0, FreeNeighbors, 0, tmp.length);
-                            FreeNeighbors[tmp.length] = new int[]{Cords[0] + y, Cords[1] + x};
+                        if (y != 0 && x != 0) {
+                            if (!Board[Cords[0] + y][Cords[1] + x]) {
+                                int[][] tmp = FreeNeighbors;
+                                FreeNeighbors = new int[tmp.length + 1][2];
+                                System.arraycopy(tmp, 0, FreeNeighbors, 0, tmp.length);
+                                FreeNeighbors[tmp.length] = new int[]{Cords[0] + y, Cords[1] + x};
+                            }
                         }
                     }
                 }
@@ -57,11 +59,13 @@ public class game {
             for (int x = -1; x != 2; x++) {
                 if ((Cords[0] + y >= 0) && (Cords[0] + y < Dimensions[0])) {
                     if ((Cords[1] + x >= 0) && (Cords[1] + x < Dimensions[1])) {
-                        if (Board[Cords[0] + y][Cords[1] + x]) {
-                            int[][] tmp = AliveNeighbors;
-                            AliveNeighbors = new int[tmp.length + 1][2];
-                            System.arraycopy(tmp, 0, AliveNeighbors, 0, tmp.length);
-                            AliveNeighbors[tmp.length] = new int[]{Cords[0] + y, Cords[1] + x};
+                        if (y != 0 && x != 0) {
+                            if (Board[Cords[0] + y][Cords[1] + x]) {
+                                int[][] tmp = AliveNeighbors;
+                                AliveNeighbors = new int[tmp.length + 1][2];
+                                System.arraycopy(tmp, 0, AliveNeighbors, 0, tmp.length);
+                                AliveNeighbors[tmp.length] = new int[]{Cords[0] + y, Cords[1] + x};
+                            }
                         }
                     }
                 }
