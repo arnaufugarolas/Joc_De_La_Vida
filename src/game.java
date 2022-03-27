@@ -54,23 +54,72 @@ public class game {
 
     public int[][] CelGetAliveNeighbors(boolean[][] Board, int[] Cords) {
         int[][] AliveNeighbors = new int[0][2];
-        int[] Dimensions = {Board.length, Board[0].length};
-        for (int y = -1; y != 2; y++) {
-            for (int x = -1; x != 2; x++) {
-                if ((Cords[0] + y >= 0) && (Cords[0] + y < Dimensions[0])) {
-                    if ((Cords[1] + x >= 0) && (Cords[1] + x < Dimensions[1])) {
-                        if (y != 0 && x != 0) {
-                            if (Board[Cords[0] + y][Cords[1] + x]) {
-                                int[][] tmp = AliveNeighbors;
-                                AliveNeighbors = new int[tmp.length + 1][2];
-                                System.arraycopy(tmp, 0, AliveNeighbors, 0, tmp.length);
-                                AliveNeighbors[tmp.length] = new int[]{Cords[0] + y, Cords[1] + x};
-                            }
-                        }
-                    }
-                }
+
+        try {
+            if (Board[Cords[0] - 1][Cords[1] - 1]) {
+                int[][] tmp = AliveNeighbors;
+                AliveNeighbors = new int[tmp.length + 1][2];
+                System.arraycopy(tmp, 0, AliveNeighbors, 0, tmp.length);
+                AliveNeighbors[tmp.length] = new int[]{Cords[0] - 1, Cords[1] - 1};
             }
-        }
+        } catch (Exception e) {}
+        try {
+            if (Board[Cords[0] - 1][Cords[1]]) {
+                int[][] tmp = AliveNeighbors;
+                AliveNeighbors = new int[tmp.length + 1][2];
+                System.arraycopy(tmp, 0, AliveNeighbors, 0, tmp.length);
+                AliveNeighbors[tmp.length] = new int[]{Cords[0] - 1, Cords[1]};
+            }
+        } catch (Exception e) {}
+        try {
+            if (Board[Cords[0] - 1][Cords[1] + 1]) {
+                int[][] tmp = AliveNeighbors;
+                AliveNeighbors = new int[tmp.length + 1][2];
+                System.arraycopy(tmp, 0, AliveNeighbors, 0, tmp.length);
+                AliveNeighbors[tmp.length] = new int[]{Cords[0] - 1, Cords[1] + 1};
+            }
+        } catch (Exception e) {}
+        try {
+            if (Board[Cords[0]][Cords[1] - 1]) {
+                int[][] tmp = AliveNeighbors;
+                AliveNeighbors = new int[tmp.length + 1][2];
+                System.arraycopy(tmp, 0, AliveNeighbors, 0, tmp.length);
+                AliveNeighbors[tmp.length] = new int[]{Cords[0], Cords[1] - 1};
+            }
+        } catch (Exception e) {}
+        try {
+            if (Board[Cords[0]][Cords[1] + 1]) {
+                int[][] tmp = AliveNeighbors;
+                AliveNeighbors = new int[tmp.length + 1][2];
+                System.arraycopy(tmp, 0, AliveNeighbors, 0, tmp.length);
+                AliveNeighbors[tmp.length] = new int[]{Cords[0], Cords[1] + 1};
+            }
+        } catch (Exception e) {}
+        try {
+            if (Board[Cords[0] + 1][Cords[1] - 1]) {
+                int[][] tmp = AliveNeighbors;
+                AliveNeighbors = new int[tmp.length + 1][2];
+                System.arraycopy(tmp, 0, AliveNeighbors, 0, tmp.length);
+                AliveNeighbors[tmp.length] = new int[]{Cords[0] + 1, Cords[1] - 1};
+            }
+        } catch (Exception e) {}
+        try {
+            if (Board[Cords[0] + 1][Cords[1]]) {
+                int[][] tmp = AliveNeighbors;
+                AliveNeighbors = new int[tmp.length + 1][2];
+                System.arraycopy(tmp, 0, AliveNeighbors, 0, tmp.length);
+                AliveNeighbors[tmp.length] = new int[]{Cords[0] + 1, Cords[1]};
+            }
+        } catch (Exception e) {}
+        try {
+            if (Board[Cords[0] + 1][Cords[1] + 1]) {
+                int[][] tmp = AliveNeighbors;
+                AliveNeighbors = new int[tmp.length + 1][2];
+                System.arraycopy(tmp, 0, AliveNeighbors, 0, tmp.length);
+                AliveNeighbors[tmp.length] = new int[]{Cords[0] + 1, Cords[1] + 1};
+            }
+        } catch (Exception e) {}
+
         return AliveNeighbors;
     }
 
@@ -123,8 +172,34 @@ public class game {
         return Board;
     }
 
+    public boolean[][] BoardLifeCycle(boolean[][] Board) {
+        int[] Dimensions = {Board.length, Board[0].length};
+
+        boolean[][] NewBoard = new boolean[Dimensions[0]][Dimensions[1]];
+
+        for (int y = 0; y != Dimensions[0]; y++) {
+            for (int x = 0; x != Dimensions[1]; x++) {
+                int vivas = Main.CelGetAliveNeighbors(Board, new int[]{y, x}).length;
+                if (vivas > 3) NewBoard[y][x] = false;
+                else if (vivas < 2) NewBoard[y][x] = false;
+                else if (Board[y][x]) NewBoard[y][x] = true;
+                else if (!Board[y][x] && vivas == 3) NewBoard[y][x] = true;
+            }
+        }
+
+        return NewBoard;
+    }
+
+
     public static void main(String[] args) {
-        Main.BoardPrint(Main.BoardDrawnAuto(Main.BoardInit()));
+        boolean [][] Board = Main.BoardDrawnAuto(Main.BoardInit());
+        while (true){
+            Main.BoardPrint(Board);
+            System.out.println();
+            Board = Main.BoardLifeCycle(Board);
+        }
+
+
     }
 }
 
