@@ -1,5 +1,6 @@
 import java.util.Random;
 import java.util.Scanner;
+import java.util.concurrent.TimeUnit;
 
 public class game {
     static Scanner input = new Scanner(System.in);
@@ -19,8 +20,8 @@ public class game {
     }
 
     public void BoardPrint(boolean[][] Board) {
-        char Live = 9209;
-        char Dead = 11036;
+        char Live = 0x23f9;
+        char Dead = 0x2b1c;
         for (boolean[] y : Board) {
             for (boolean x : y) {
                 if (x) System.out.printf("%c ", Live);
@@ -37,7 +38,7 @@ public class game {
             for (int x = -1; x != 2; x++) {
                 if ((Cords[0] + y >= 0) && (Cords[0] + y < Dimensions[0])) {
                     if ((Cords[1] + x >= 0) && (Cords[1] + x < Dimensions[1])) {
-                        if (y != 0 && x != 0) {
+                        if (!(y == 0 && x == 0)) {
                             if (!Board[Cords[0] + y][Cords[1] + x]) {
                                 int[][] tmp = FreeNeighbors;
                                 FreeNeighbors = new int[tmp.length + 1][2];
@@ -58,12 +59,15 @@ public class game {
         for (int y = -1; y != 2; y++) {
             for (int x = -1; x != 2; x++) {
                 try {
-                    if (Board[Cords[0] + (y)][Cords[1] + (x)]) {
-                        int[][] tmp = AliveNeighbors;
-                        AliveNeighbors = new int[tmp.length + 1][2];
-                        System.arraycopy(tmp, 0, AliveNeighbors, 0, tmp.length);
-                        AliveNeighbors[tmp.length] = new int[]{Cords[0] + (y), Cords[1] + (x)};
+                    if (!(y == 0 && x == 0)) {
+                        if (Board[Cords[0] + (y)][Cords[1] + (x)]) {
+                            int[][] tmp = AliveNeighbors;
+                            AliveNeighbors = new int[tmp.length + 1][2];
+                            System.arraycopy(tmp, 0, AliveNeighbors, 0, tmp.length);
+                            AliveNeighbors[tmp.length] = new int[]{Cords[0] + (y), Cords[1] + (x)};
+                        }
                     }
+
                 } catch (Exception e) {}
             }
         }
@@ -80,7 +84,6 @@ public class game {
             if (cells * 6 < Dimensions[0] * Dimensions[1]) stop = true;
             else System.out.println("Número de conjunts massa gran");
         }
-
         for (int i = 0; i != cells;){
             int[] ApexCell = {random.nextInt(Dimensions[0]), random.nextInt(Dimensions[1])};
             if (!Board[ApexCell[0]][ApexCell[1]]) {
@@ -130,8 +133,8 @@ public class game {
                 int vivas = Main.CelGetAliveNeighbors(Board, new int[]{y, x}).length;
                 if (vivas > 3) NewBoard[y][x] = false;
                 else if (vivas < 2) NewBoard[y][x] = false;
-                else if (Board[y][x]) NewBoard[y][x] = true;
                 else if (!Board[y][x] && vivas == 3) NewBoard[y][x] = true;
+                else if (Board[y][x]) NewBoard[y][x] = true;
             }
         }
 
@@ -139,15 +142,37 @@ public class game {
     }
 
 
-    public static void main(String[] args) {
-        boolean [][] Board = Main.BoardDrawnAuto(Main.BoardInit());
+    public void start(){
+        int option = Main.NextInt("Manual: 1 o Automatic: 2\n");
+        boolean [][] Board;
+        if (option == 1) {
+            Board = Main.BoardDrawnManual(Main.BoardInit());
+        } else {
+            Board = Main.BoardDrawnAuto(Main.BoardInit());
+        }
         while (true){
             Main.BoardPrint(Board);
             System.out.println();
             Board = Main.BoardLifeCycle(Board);
+            try {
+                TimeUnit.MILLISECONDS.sleep(200);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+
         }
+    }
 
-
+    public static void main(String[] args) {
+        boolean stop = false;
+        while (!stop) {
+            int option = Main.NextInt("Començar el joc: 1\nSortir: 2\n");
+            if (option == 1) {
+                Main.start();
+            } else {
+                stop = true;
+            }
+        }
     }
 }
 
