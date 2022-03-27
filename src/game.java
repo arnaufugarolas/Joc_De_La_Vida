@@ -55,70 +55,18 @@ public class game {
     public int[][] CelGetAliveNeighbors(boolean[][] Board, int[] Cords) {
         int[][] AliveNeighbors = new int[0][2];
 
-        try {
-            if (Board[Cords[0] - 1][Cords[1] - 1]) {
-                int[][] tmp = AliveNeighbors;
-                AliveNeighbors = new int[tmp.length + 1][2];
-                System.arraycopy(tmp, 0, AliveNeighbors, 0, tmp.length);
-                AliveNeighbors[tmp.length] = new int[]{Cords[0] - 1, Cords[1] - 1};
+        for (int y = -1; y != 2; y++) {
+            for (int x = -1; x != 2; x++) {
+                try {
+                    if (Board[Cords[0] + (y)][Cords[1] + (x)]) {
+                        int[][] tmp = AliveNeighbors;
+                        AliveNeighbors = new int[tmp.length + 1][2];
+                        System.arraycopy(tmp, 0, AliveNeighbors, 0, tmp.length);
+                        AliveNeighbors[tmp.length] = new int[]{Cords[0] + (y), Cords[1] + (x)};
+                    }
+                } catch (Exception e) {}
             }
-        } catch (Exception e) {}
-        try {
-            if (Board[Cords[0] - 1][Cords[1]]) {
-                int[][] tmp = AliveNeighbors;
-                AliveNeighbors = new int[tmp.length + 1][2];
-                System.arraycopy(tmp, 0, AliveNeighbors, 0, tmp.length);
-                AliveNeighbors[tmp.length] = new int[]{Cords[0] - 1, Cords[1]};
-            }
-        } catch (Exception e) {}
-        try {
-            if (Board[Cords[0] - 1][Cords[1] + 1]) {
-                int[][] tmp = AliveNeighbors;
-                AliveNeighbors = new int[tmp.length + 1][2];
-                System.arraycopy(tmp, 0, AliveNeighbors, 0, tmp.length);
-                AliveNeighbors[tmp.length] = new int[]{Cords[0] - 1, Cords[1] + 1};
-            }
-        } catch (Exception e) {}
-        try {
-            if (Board[Cords[0]][Cords[1] - 1]) {
-                int[][] tmp = AliveNeighbors;
-                AliveNeighbors = new int[tmp.length + 1][2];
-                System.arraycopy(tmp, 0, AliveNeighbors, 0, tmp.length);
-                AliveNeighbors[tmp.length] = new int[]{Cords[0], Cords[1] - 1};
-            }
-        } catch (Exception e) {}
-        try {
-            if (Board[Cords[0]][Cords[1] + 1]) {
-                int[][] tmp = AliveNeighbors;
-                AliveNeighbors = new int[tmp.length + 1][2];
-                System.arraycopy(tmp, 0, AliveNeighbors, 0, tmp.length);
-                AliveNeighbors[tmp.length] = new int[]{Cords[0], Cords[1] + 1};
-            }
-        } catch (Exception e) {}
-        try {
-            if (Board[Cords[0] + 1][Cords[1] - 1]) {
-                int[][] tmp = AliveNeighbors;
-                AliveNeighbors = new int[tmp.length + 1][2];
-                System.arraycopy(tmp, 0, AliveNeighbors, 0, tmp.length);
-                AliveNeighbors[tmp.length] = new int[]{Cords[0] + 1, Cords[1] - 1};
-            }
-        } catch (Exception e) {}
-        try {
-            if (Board[Cords[0] + 1][Cords[1]]) {
-                int[][] tmp = AliveNeighbors;
-                AliveNeighbors = new int[tmp.length + 1][2];
-                System.arraycopy(tmp, 0, AliveNeighbors, 0, tmp.length);
-                AliveNeighbors[tmp.length] = new int[]{Cords[0] + 1, Cords[1]};
-            }
-        } catch (Exception e) {}
-        try {
-            if (Board[Cords[0] + 1][Cords[1] + 1]) {
-                int[][] tmp = AliveNeighbors;
-                AliveNeighbors = new int[tmp.length + 1][2];
-                System.arraycopy(tmp, 0, AliveNeighbors, 0, tmp.length);
-                AliveNeighbors[tmp.length] = new int[]{Cords[0] + 1, Cords[1] + 1};
-            }
-        } catch (Exception e) {}
+        }
 
         return AliveNeighbors;
     }
