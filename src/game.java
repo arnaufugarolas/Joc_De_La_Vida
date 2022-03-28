@@ -141,7 +141,6 @@ public class game {
         return NewBoard;
     }
 
-
     public void start(){
         int option = Main.NextInt("Manual: 1 o Automatic: 2\n");
         boolean [][] Board;
@@ -175,4 +174,3 @@ public class game {
         }
     }
 }
-
